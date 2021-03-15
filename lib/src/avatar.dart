@@ -183,7 +183,7 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
           _networkPath = null;
           _localPath = null;
 
-          _defaultImagePath = pickedFile.path;
+          // _defaultImagePath = pickedFile.path;
 
           _usePackageDefaultImage = false;
 
@@ -195,7 +195,7 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
         });
 
         if (widget.onSelection != null) {
-          widget.onSelection(_defaultImagePath, _imageFile);
+          widget.onSelection(pickedFile.path, _imageFile);
         }
       }
     }
