@@ -15,7 +15,7 @@ class CustomizedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: const Color(0xFF02072F),
+      backgroundColor: Theme.of(context).primaryColor,
       shape: hasRoundedCorners
           ? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),

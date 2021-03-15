@@ -105,6 +105,9 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    _networkPath = widget.networkPath;
+    _localPath = widget.localPath;
+
     _animation = Tween(begin: 0.0, end: widget.radius).animate(CurvedAnimation(
         parent: _animationController, curve: widget.loadingAnimationEffect));
 
