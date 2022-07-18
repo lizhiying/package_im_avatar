@@ -9,7 +9,7 @@ typedef SelectedPictureSource = void Function(PictureSource);
 class ImageSourceSelector extends StatelessWidget {
   final SelectedPictureSource selectedPictureSource;
 
-  ImageSourceSelector({this.selectedPictureSource});
+  ImageSourceSelector({required this.selectedPictureSource});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,7 @@ class ImageSourceSelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          OutlineButton(
-            borderSide: BorderSide.none,
+          OutlinedButton(
             child: Text(
               'Camera',
               style: TextStyle(
@@ -33,8 +32,7 @@ class ImageSourceSelector extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          OutlineButton(
-            borderSide: BorderSide.none,
+          OutlinedButton(
             child: Text(
               'Gallery',
               style: TextStyle(

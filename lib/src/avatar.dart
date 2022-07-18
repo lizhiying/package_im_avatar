@@ -15,13 +15,13 @@ class Avatar extends StatefulWidget {
   final double radius;
 
   /// Fired when an image is selected either from the camera or the gallery.
-  final _OnSelection onSelection;
+  final _OnSelection? onSelection;
 
   /// Once the image is selected from the camera or the gallery, it may be permanantly displayed within the Avatar using the networkPath, retrieved using the onSelection callback.
-  final String networkPath;
+  final String? networkPath;
 
   /// Once the image is selected from the camera or the gallery, it may be permanantly displayed within the Avatar using the localPath, retrieved using the onSelection callback.
-  final String localPath;
+  final String? localPath;
 
   /// Whether the avatar selection from camera or gallery is disabled or not.
   final bool selectionDisabled;
@@ -62,21 +62,21 @@ class Avatar extends StatefulWidget {
 
 class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
   /// The default path to be used for the avatar image, which is typically set to 'assets/default_avatar.png' initially and changed to the local path of the image, when an image is selected.
-  String _defaultImagePath;
+  String? _defaultImagePath;
 
   /// An image file created out of the local path of the image selected. Typically, required the the user app requires to store the picture locally or on cloud.
-  File _imageFile;
-  String _networkPath;
-  String _localPath;
+  File? _imageFile;
+  String? _networkPath;
+  String? _localPath;
 
   /// The source used to capture an image i.e. either camera or gallery.
-  PictureSource _pictureSource;
+  PictureSource? _pictureSource;
 
   /// Since usings assets in dart requires a package attribute to be specified in the AssetImage, this exists for that sole reasons. Otherwise it could have been omitted altogether.
-  bool _usePackageDefaultImage;
+  bool _usePackageDefaultImage = true;
 
-  AnimationController _animationController;
-  Animation _animation;
+  AnimationController? _animationController;
+  Animation? _animation;
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    _animationController.dispose();
+    _animationController?.dispose();
   }
 
   @override
@@ -109,7 +109,7 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
     _localPath = widget.localPath;
 
     _animation = Tween(begin: 0.0, end: widget.radius).animate(CurvedAnimation(
-        parent: _animationController, curve: widget.loadingAnimationEffect));
+        parent: _animationController!, curve: widget.loadingAnimationEffect));
 
     return IgnorePointer(
       ignoring: widget.selectionDisabled,
@@ -121,12 +121,12 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
                 ? BoxShape.circle
                 : BoxShape.rectangle,
           ),
-          height: _animation.status == AnimationStatus.dismissed
+          height: _animation!.status == AnimationStatus.dismissed
               ? widget.radius
-              : _animation.value,
-          width: _animation.status == AnimationStatus.dismissed
+              : _animation!.value,
+          width: _animation!.status == AnimationStatus.dismissed
               ? widget.radius
-              : _animation.value,
+              : _animation!.value,
           child: widget.avatarShape == AvatarShape.circular
               ? ClipOval(
                   child: FittedBox(
@@ -189,13 +189,13 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
 
           // Run animation when loading a new image.
           if (!widget.loadingAnimationDisabled) {
-            _animationController.reset();
-            _animationController.forward();
+            _animationController?.reset();
+            _animationController?.forward();
           }
         });
 
         if (widget.onSelection != null) {
-          widget.onSelection(pickedFile.path, _imageFile);
+          widget.onSelection!(pickedFile.path, _imageFile!);
         }
       }
     }
@@ -203,12 +203,12 @@ class _AvatarState extends State<Avatar> with SingleTickerProviderStateMixin {
 
   ImageProvider _avatarImage() {
     if (_networkPath != null) {
-      return NetworkImage(_networkPath);
+      return NetworkImage(_networkPath!);
     } else if (_localPath != null) {
-      return AssetImage(_localPath);
+      return AssetImage(_localPath!);
     } else {
       return AssetImage(
-        _defaultImagePath,
+        _defaultImagePath!,
         package: _usePackageDefaultImage ? 'im_avatar' : null,
       );
     }

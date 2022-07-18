@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomizedDialog extends StatelessWidget {
-  final Widget child;
-  final double height;
+  final Widget? child;
+  final double? height;
   final bool hasRoundedCorners;
   final double borderWidth;
 
